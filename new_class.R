@@ -1,6 +1,6 @@
 ## New Class
 
-## Class for numeric vectors that only contain 1s and 0s
+## Class for numeric vectors that only contain 1s and 0s (DO NOT CHANGE)
 setClass(
     Class = "binary_vector",
     contains = "numeric"
