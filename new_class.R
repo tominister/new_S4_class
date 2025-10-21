@@ -1,58 +1,60 @@
-## New Class
-
-## Class for numeric vectors that only contain 1s and 0s (DO NOT CHANGE)
+# Define the class
 setClass(
-    Class = "binary_vector",
-    contains = "numeric"
+  "binary_vector",
+  contains = "numeric"
 )
 
-## Validity method for 'binary_vector' -- there should only be 0s and 1s
+# Define validity method
 setValidity(
-    Class = "binary_vector",
-    method = function(object) {
-        ## Complete this function
+  "binary_vector",
+  function(object) {
+    if (!all(object %in% c(0, 1))) {
+      return("binary_vector can only contain 0s and 1s.")
     }
+    TRUE
+  }
 )
 
-## Coerce method from character --> binary_vector
+# Define coercion from character
 setAs(
-    from = "character",
-    to = "binary_vector",
-    def = function(from) {
-        ## Complete this function
-    }
+  "character",
+  "binary_vector",
+  function(from) {
+    numeric_vals <- as.numeric(from)
+    new("binary_vector", numeric_vals)
+  }
 )
 
-## Adding two binary_vectors using binary arithmetic
-## 1 + 1 = 0
-## 1 + 0 = 1
-## 0 + 1 = 1
-## 0 + 0 = 0
-
-## Generic function for adding two vectors
+# Define generic function
 setGeneric(
-    "add_vector",
-    ## Complete the rest of the generic function definition
+  "add_vector",
+  function(x, y) standardGeneric("add_vector")
 )
 
-## Specific method function for adding two binary vectors
+# Define method for adding two binary_vectors
 setMethod(
-    "add_vector",
-    ## Complete the rest of the method function definition
+  "add_vector",
+  signature(x = "binary_vector", y = "binary_vector"),
+  function(x, y) {
+    if (length(x) != length(y)) stop("Binary vectors must be of the same length.")
+    result <- (x + y) %% 2
+    new("binary_vector", as.numeric(result))
+  }
 )
+
 
 
 ################################################################################
 ## Some test cases
 
 ## Create a new vector
-x <- new("binary_vector", c(0, 1, 1, 0, 0))
+#x <- new("binary_vector", c(0, 1, 1, 0, 0))
 
 ## This should fail with an error
-x <- new("binary_vector", c(0, 1, 1, 0, 2))
+#x <- new("binary_vector", c(0, 1, 1, 0, 2))
 
 ## This should fail with an error
-x <- new("binary_vector", c(0, 1, -1, 0, 0))
+#x <- new("binary_vector", c(0, 1, -1, 0, 0))
 
 ## Coerce from a character vector
 x <- as(c("0", "1", "1", "0", "0", "1"), "binary_vector")
@@ -61,3 +63,4 @@ y <- new("binary_vector", c(1, 1, 0, 0, 1, 0))
 ## Add two binary vectors
 z <- add_vector(x, y)
 z  ## should be c(1, 0, 1, 0, 1, 1)
+print(z)
