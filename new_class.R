@@ -45,11 +45,14 @@ setMethod(
 ################################################################################
 ## Some test cases
 
-## Create a new vectdor
+## Create a new vector
 x <- new("binary_vector", c(0, 1, 1, 0, 0))
 
 ## This should fail with an error
 x <- new("binary_vector", c(0, 1, 1, 0, 2))
+
+## This should fail with an error
+x <- new("binary_vector", c(0, 1, -1, 0, 0))
 
 ## Coerce from a character vector
 x <- as(c("0", "1", "1", "0", "0", "1"), "binary_vector")
