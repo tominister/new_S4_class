@@ -41,3 +41,20 @@ setMethod(
     ## Complete the rest of the method function definition
 )
 
+
+################################################################################
+## Some test cases
+
+## Create a new vectdor
+x <- new("binary_vector", c(0, 1, 1, 0, 0))
+
+## This should fail with an error
+x <- new("binary_vector", c(0, 1, 1, 0, 2))
+
+## Coerce from a character vector
+x <- as(c("0", "1", "1", "0", "0", "1"), "binary_vector")
+y <- new("binary_vector", c(1, 1, 0, 0, 1, 0))
+
+## Add two binary vectors
+z <- add_vector(x, y)
+z  ## should be c(1, 0, 1, 0, 1, 1)
